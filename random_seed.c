@@ -221,32 +221,11 @@ static const char *dev_random_file = "/dev/urandom";
 
 static int get_dev_random_seed(int *seed)
 {
-	DEBUG_SEED("get_dev_random_seed");
-
-	struct stat buf;
-	if (stat(dev_random_file, &buf))
-		return -1;
-	if ((buf.st_mode & S_IFCHR) == 0)
-		return -1;
-
-	int fd = open(dev_random_file, O_RDONLY);
-	if (fd < 0)
-	{
-		fprintf(stderr, "error opening %s: %s", dev_random_file, strerror(errno));
-		return -1;
-	}
-
-	ssize_t nread = read(fd, seed, sizeof(*seed));
-
-	close(fd);
-
-	if (nread != sizeof(*seed))
-	{
-		fprintf(stderr, "error short read %s: %s", dev_random_file, strerror(errno));
-		return -1;
-	}
-
-	return 0;
+    struct stat buf;
+    if (stat(dev_random_file, &buf)) {
+        return 0;
+    }
+    return (S_ISCHR(buf.st_mode) != 0);
 }
 
 #endif
