@@ -8,15 +8,8 @@
 
 #include "snprintf_compat.h"
 
-#ifndef WIN32
-#include <stdarg.h>
-#endif /* !defined(WIN32) */
-#include <stdint.h>
-#include <stdlib.h>
-
-#if !defined(HAVE_VASPRINTF)
 /* CAW: compliant version of vasprintf */
-static int vasprintf(char **buf, const char *fmt, va_list ap)
+static int json_vasprintf(char **buf, const char *fmt, va_list ap)
 {
 #ifndef WIN32
 	static char _T_emptybuffer = '\0';
@@ -62,6 +55,3 @@ static int vasprintf(char **buf, const char *fmt, va_list ap)
 
 	return chars;
 }
-#endif /* !HAVE_VASPRINTF */
-
-#endif /* __vasprintf_compat_h */
