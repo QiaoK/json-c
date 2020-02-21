@@ -17,8 +17,26 @@
 #ifndef _json_object_h_
 #define _json_object_h_
 
+#if !defined ATTRIBUTE
+#if defined HAVE_GCC_ATTRIBUTE
+#define ATTRIBUTE(a_) __attribute__(a_)
+#else /* HAVE_GCC_ATTRIBUTE */
+#define ATTRIBUTE(a_)
+#endif /* HAVE_GCC_ATTRIBUTE */
+#endif /* ATTRIBUTE */
+
 #ifdef __GNUC__
-#define JSON_C_CONST_FUNCTION(func) func __attribute__((const))
+#define THIS_FUNCTION_IS_DEPRECATED(func) func ATTRIBUTE((deprecated))
+#elif defined(_MSC_VER)
+#define THIS_FUNCTION_IS_DEPRECATED(func) __declspec(deprecated) func
+#elif defined(__clang__)
+#define THIS_FUNCTION_IS_DEPRECATED(func) func __deprecated
+#else
+#define THIS_FUNCTION_IS_DEPRECATED(func) func
+#endif
+
+#ifdef __GNUC__
+#define JSON_C_CONST_FUNCTION(func) func ATTRIBUTE((const))
 #else
 #define JSON_C_CONST_FUNCTION(func) func
 #endif
