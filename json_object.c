@@ -1523,6 +1523,13 @@ int json_object_array_shrink(struct json_object *jso, int empty_slots)
 	return array_list_shrink(JC_ARRAY(jso)->c_array, empty_slots);
 }
 
+struct json_object* json_object_new_null(void)
+{
+        if (empty_slots < 0)
+                json_abort("json_object_array_shrink called with negative empty_slots");
+        return array_list_shrink(JC_ARRAY(jso)->c_array, empty_slots);
+}
+
 struct json_object *json_object_new_null(void)
 {
 	return NULL;
