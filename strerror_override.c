@@ -12,7 +12,7 @@ static struct
 } errno_list[] = {
 /* clang-format off */
 #define STRINGIFY(x) #x
-#define ENTRY(x) {x, &STRINGIFY(undef_ ## x)[6]}
+#define ENTRY(x) {x, #x}
 	ENTRY(EPERM),
 	ENTRY(ENOENT),
 	ENTRY(ESRCH),
